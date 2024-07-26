@@ -1,0 +1,49 @@
+
+h2{
+  margin-left: 34%;
+  text-decoration: underline;
+}
+
+
+body {
+
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+}
+
+.container {
+  border: 2px solid #333;
+  padding: 20px;
+  text-align: center;
+  background-color: #fff;
+}
+
+.dice {
+  display: inline-block;
+  margin: 20px;
+}
+
+.img1,
+.img2 {
+  width: 100px;
+  height: 100px; 
+}
+
+button {
+ margin-top: 40px;
+ margin-left: 40%;
+  padding: 10px ;
+  font-size: 16px;
+  width: 90px;
+  cursor: pointer;
+  background-color: #4caf50;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+}
+
+button:hover {
+  background-color: #243825;
+}
