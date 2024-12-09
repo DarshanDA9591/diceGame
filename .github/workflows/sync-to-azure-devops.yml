@@ -19,19 +19,21 @@ jobs:
           git config --global user.email "actions@github.com"
 
       - name: Add Azure DevOps Remote
+        env:
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
-          # Remove the 'azure' remote if it already exists to avoid conflicts
+          # Remove the 'azure' remote if it already exists
           git remote remove azure || true
           
-          # Add Azure DevOps repository as a remote
+          # Add Azure DevOps repository as a remote using the PAT
           git remote add azure https://$AZURE_DEVOPS_PAT@dev.azure.com/darshanda66/second%20Project/_git/second%20Project
           
-          # Verify remotes
+          # Verify the remotes
           git remote -v
 
       - name: Push to Azure DevOps
         env:
           AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
-          # Push the changes to the Azure DevOps repository
+          # Push the changes to Azure DevOps
           git push azure master:master --force
