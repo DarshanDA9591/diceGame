@@ -26,4 +26,4 @@ jobs:
           git remote add azure https://darshanda66@dev.azure.com/second Project/_git/second Project
           
           # Push the changes to the Azure DevOps repository
-          git push azure main --force
+          git push azure main --force 
