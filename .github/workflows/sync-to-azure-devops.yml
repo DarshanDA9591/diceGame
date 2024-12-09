@@ -23,7 +23,7 @@ jobs:
           AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
           # Add Azure DevOps repository as a remote
-          git remote add azure  https://darshanda66@dev.azure.com/darshanda66/second Project/_git/second Project
+          git remote add azure https://darshanda66@dev.azure.com/darshanda66/second%20Project/_git/second%20Project
                               
           # Push the changes to the Azure DevOps repository
           git push origin master --force 
