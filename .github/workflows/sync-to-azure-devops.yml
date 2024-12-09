@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout the Code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch the full Git history
 
       - name: Configure Git
         run: |
