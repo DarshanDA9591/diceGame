@@ -3,7 +3,7 @@ name: Sync to Azure DevOps
 on:
   push:
     branches:
-      - main
+      - master  # Trigger on push to the 'master' branch
 
 jobs:
   sync:
@@ -12,18 +12,30 @@ jobs:
     steps:
       - name: Checkout the Code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch the full Git history
 
       - name: Configure Git
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "actions@github.com"
 
+      - name: Add Azure DevOps Remote
+        env:
+          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
+        run: |
+          # Remove the 'azure' remote if it already exists
+          git remote remove azure || true
+          
+          # Add Azure DevOps repository as a remote using the PAT
+          git remote add azure https://$AZURE_DEVOPS_PAT@dev.azure.com/darshanda66/second%20Project/_git/second%20Project
+          
+          # Verify the remotes
+          git remote -v
+
       - name: Push to Azure DevOps
         env:
           AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
-          # Add Azure DevOps repository as a remote
-          git remote add azure https://<darshanda66>@dev.azure.com/<second Project>/_git/<second Project>
-          
-          # Push the changes to the Azure DevOps repository
-          git push azure main --force
+          # Push the changes to Azure DevOps
+          git push azure master:master --force
