@@ -3,7 +3,7 @@ name: Sync to Azure DevOps
 on:
   push:
     branches:
-      - '*'  # Trigger on push to any branch
+      - master  # Trigger on push to the 'master' branch
 
 jobs:
   sync:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout the Code
         uses: actions/checkout@v3
         with:
-          fetch-depth: 0  # Fetch the full Git history and all branches
+          fetch-depth: 0  # Fetch the full Git history
 
       - name: Configure Git
         run: |
@@ -33,16 +33,9 @@ jobs:
           # Verify the remotes
           git remote -v
 
-      - name: Push All Branches to Azure DevOps
+      - name: Push to Azure DevOps
         env:
           AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
         run: |
-          # Push all branches to Azure DevOps
-          git push azure --all --force
-
-      - name: Push Tags to Azure DevOps
-        env:
-          AZURE_DEVOPS_PAT: ${{ secrets.AZURE_DEVOPS_PAT }}
-        run: |
-          # Push all tags to Azure DevOps (optional)
-          git push azure --tags
+          # Push the changes to Azure DevOps
+          git push azure master:master --force
