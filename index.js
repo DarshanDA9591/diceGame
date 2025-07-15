@@ -9,7 +9,7 @@ var image2 = document.querySelectorAll("img")[1];
 image2.setAttribute("src",player2Img);
 
 if(player1>player2){
-    document.querySelector("h1").innerHTML="You Won";
+    document.querySelector("h1").innerHTML="You Wonnn";
 }else if(player1===player2){
     document.querySelector("h1").innerHTML="Match Drawn";
 }else{
