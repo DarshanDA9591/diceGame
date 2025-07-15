@@ -3,13 +3,13 @@ name: Mirror All Branches to Azure Repos
 on:
   push:
     branches:
-      - '**'  # Match all branches
+      - '**'  # Trigger on all branches
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout source branch
+      - name: Checkout GitHub repo
         uses: actions/checkout@v3
 
       - name: Push to Azure Repos
@@ -20,9 +20,13 @@ jobs:
           # Get the current branch name
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
 
-          # Add Azure Repos as remote and push
-          git remote add azure https://$AZURE_PAT@dev.azure.com/ORG/PROJECT/_git/REPO
-          git push --force azure HEAD:$BRANCH_NAME
-          
-    env:
-      AZURE_PAT: ${{ secrets.AZURE_PAT }}
+          # Add Azure Repos remote using variables
+          git remote add azure https://dummyuser:${AZURE_PAT}@dev.azure.com/${ORG}/${PROJECT}/_git/${REPO}
+
+          # Push current branch to Azure Repos
+          git push --force azure HEAD:${BRANCH_NAME}
+        env:
+          AZURE_PAT: ${{ secrets.AZURE_PAT }}
+          REPO: ${{ secrets.REPO }}
+          PROJECT: ${{ secrets.PROJECT }}
+          ORG: ${{ secrets.ORG }}
