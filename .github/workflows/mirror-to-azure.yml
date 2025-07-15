@@ -3,27 +3,26 @@ name: Mirror All Branches to Azure Repos
 on:
   push:
     branches:
-      - '**'  # Trigger on all branches
+      - '**'  # Mirror all branches
 
 jobs:
   mirror:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout GitHub repo
+      - name: Checkout full GitHub repo
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # critical to avoid shallow push error
 
       - name: Push to Azure Repos
         run: |
           git config user.name "GitHub Actions"
           git config user.email "actions@github.com"
 
-          # Get the current branch name
           BRANCH_NAME=$(echo "${GITHUB_REF#refs/heads/}")
-
-          # Add Azure Repos remote using variables
+          
           git remote add azure https://dummyuser:${AZURE_PAT}@dev.azure.com/${ORG}/${PROJECT}/_git/${REPO}
-
-          # Push current branch to Azure Repos
+          
           git push --force azure HEAD:${BRANCH_NAME}
         env:
           AZURE_PAT: ${{ secrets.AZURE_PAT }}
